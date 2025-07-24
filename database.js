@@ -10,19 +10,31 @@ async function main() {
   console.log("Connected to MongoDB");
   const db = client.db(dbName);
   const collection = db.collection("User");
-const data ={
-  Name:"Shahim",
-  Place :"Mangalore"
-}
-const newdata=await collection.insertMany([data])
-console.log("***Recently Added data***",newdata);
 
+  await collection.deleteMany({}); // used to clear all the documnets before running again
 
-//Read 
-const findResults = await collection.find({}).toArray();
-console.log("****Found Documents*****",findResults)
+  const data = [
+    { Name: "Shahim", Place: "Mangalore" },
+    { Name: "Salam", Place: "Mangalore" },
+  ];
+
+  const newData = await collection.insertMany(data);
+  console.log("***Recently Added data***", newData);
+
+  // ✅ Update
+  const updateResult = await collection.updateOne(
+    { Name: "Salam" },
+    { $set: { Place: "Udupi" } }
+  );
+  console.log("****Updated****", updateResult);
+
+  // ✅ Read
+  const findResults = await collection.find({}).toArray();
+  console.log("****Found Documents****", findResults);
+
   return "DONE";
 }
+
 main()
   .then(console.log)
   .catch(console.error)

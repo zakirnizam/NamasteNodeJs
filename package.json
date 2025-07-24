@@ -1,6 +1,6 @@
 {
   "dependencies": {
     "fs": "^0.0.1-security",
-    "mongodb": "^6.17.0"
+    "mongodb": "^6.18.0"
   }
 }
